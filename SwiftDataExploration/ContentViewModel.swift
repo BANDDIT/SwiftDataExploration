@@ -22,28 +22,68 @@ class ContentViewModel: ObservableObject {
         let descriptor = FetchDescriptor<Model1>()
         do {
             let fetchedModel = try modelContext?.fetch(descriptor) ?? []
+            allItems = fetchedModel
             /*
+            print("FetchedModel : ")
             for item in fetchedModel{
                 print(item.num)
             }
             print("=========")
-             */
-            allItems = fetchedModel
+            
+            
+            print("All Items : ")
+            for item in allItems{
+                print(item.num)
+            }
+            print("=========")
+            */
+            
             
         } catch {
-            print("Error/ContextViewModel/updateItem : Failed to Fetch")
+            print("Error/ContextViewModel/readData : Failed to Fetch")
         }
     }
     
+    /*
+    func readData2(){
+        for item in allItems{
+            print(item.num)
+        }
+        print("============")
+    }
+    
+    func readData3(){
+        let descriptor = FetchDescriptor<Model1>()
+        do {
+            let fetchedModel = try modelContext?.fetch(descriptor) ?? []
+            
+            for item in fetchedModel{
+                print(item.num)
+            }
+            print("=========")
+        } catch {
+            print("Error/ContextViewModel/readData : Failed to Fetch")
+        }
+    }
+    */
     func updateItem(index:Int, value:Int){
+        // synchronize allItems and modelContext
+        readData()
+        
+        //Gimana kalau misalnya belom ke reset tapi tiba2 udah update
         guard index < allItems.count else {
             print("Error/ContextViewModel/updateItem : Index is out of range")
             return
         }
+        
         allItems[index].num = value
+        
     }
     
     func removeItem(index: Int) {
+        // synchronize allItems and modelContext
+        readData()
+        
         guard index < allItems.count else {
             print("Error/ContextViewModel/removeItem : Index is out of range")
             return

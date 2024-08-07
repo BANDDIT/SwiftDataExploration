@@ -31,7 +31,7 @@ struct ContentView: View {
             }
             
             Button("Update Data"){
-                viewModel.updateItem(index:0, value:100)
+                viewModel.updateItem(index:3, value:200)
             }
             
             
